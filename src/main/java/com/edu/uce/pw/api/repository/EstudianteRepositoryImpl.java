@@ -1,6 +1,7 @@
 package com.edu.uce.pw.api.repository;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.edu.uce.pw.api.repository.modelo.Estudiante;
@@ -14,8 +15,7 @@ import jakarta.transaction.Transactional;
 @Transactional
 public class EstudianteRepositoryImpl implements IEstudianteRepository {
 	
-	
-	@PersistenceContext
+	@Autowired
 	private EntityManager entityManager;
 
 	@Override
