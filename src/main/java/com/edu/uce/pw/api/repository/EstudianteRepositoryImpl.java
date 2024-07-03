@@ -18,7 +18,7 @@ import jakarta.transaction.Transactional;
 @Transactional
 public class EstudianteRepositoryImpl implements IEstudianteRepository {
 	
-	@Autowired
+	@PersistenceContext
 	private EntityManager entityManager;
 
 	@Override
@@ -42,8 +42,9 @@ public class EstudianteRepositoryImpl implements IEstudianteRepository {
 
 	@Override
 	public void insertar(Estudiante estudiante) {
-		// TODO Auto-generated method stub
-		this.entityManager.persist(estudiante);
+	  
+	        entityManager.persist(estudiante);
+	  
 	}
 
 	@Override

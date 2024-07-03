@@ -1,6 +1,5 @@
 package com.edu.uce.pw.api.controller;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -103,7 +102,7 @@ public class EstudianteController {
 	
 	
 	
-	@GetMapping(path = "/buscarPorGenero/")
+	@GetMapping(path = "/buscarPorGenero")
 	public List<Estudiante> buscarPorGenero(@RequestParam String genero){
 		
 		List<Estudiante> lista= this.estudianteService.buscarPorGenero(genero);
