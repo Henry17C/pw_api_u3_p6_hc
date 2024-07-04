@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.edu.uce.pw.api.repository.modelo.Estudiante;
 import com.edu.uce.pw.api.service.IEstudianteService;
 
+import jakarta.annotation.security.PermitAll;
 import jakarta.persistence.TypedQuery;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -101,13 +102,46 @@ public class EstudianteController {
 	};
 	
 	
+	//http://localhost:8080/API/v1.0/Matricula/estudiantes/buscar/2/nuevo/hola
+
+	@GetMapping(path = "/buscar/{id}/nuevo/{dato}")
+	public Estudiante buscar2(@PathVariable Integer id, @PathVariable String dato) {
+		System.out.println("dato: "+ dato);
+	return	this.estudianteService.buscar(id);
+	};
 	
+	
+	
+	//http://localhost:8080/API/v1.0/Matricula/estudiantes/buscarPorGenero?genero=M
 	@GetMapping(path = "/buscarPorGenero")
 	public List<Estudiante> buscarPorGenero(@RequestParam String genero){
+		
 		
 		List<Estudiante> lista= this.estudianteService.buscarPorGenero(genero);
 		return lista;
 	}
+	
+	
+	//http://localhost:8080/API/v1.0/Matricula/estudiantes/buscarPorGenero?genero=M&5
+	@GetMapping(path = "/buscarPorGenero/nuevo")
+	public List<Estudiante> buscarPorGenero2(@RequestParam String genero, @RequestParam Integer edad){
+		
+		System.out.println("edad: "+ edad);
+		List<Estudiante> lista= this.estudianteService.buscarPorGenero(genero);
+		return lista;
+	}
+	
+	
+	//
+	//http://localhost:8080/API/v1.0/Matricula/estudiantes/buscarMixto/1?prueba=holamundo
+	@GetMapping(path = "/buscarMixto/{id}")
+	public Estudiante buscarMixto(@PathVariable Integer id ,@RequestParam String prueba){
+		
+		System.out.println("Dato: "+ id);
+		System.out.println("Dato: "+ prueba);
+		return this.estudianteService.buscar(id);
+	}
+	
 	
 	
 	
