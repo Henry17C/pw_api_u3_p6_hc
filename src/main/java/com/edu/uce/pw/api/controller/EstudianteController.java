@@ -34,7 +34,8 @@ public class EstudianteController {
 	
 	//@RequestBoby: cuando se necesita enviar objetos entrada, se lo pone como argumaneto del metodo 
 	//http://localhost:8080/API/v1.0/Matricula/estudiantes/guardar
-	@PostMapping(path = "/guardar")
+	//Nivel1: http://localhost:8080/API/v1.0/Matricula/estudiantes
+	@PostMapping
 	public void guardar(@RequestBody Estudiante est) {
 		/*
 		Estudiante est= new Estudiante();
@@ -49,19 +50,19 @@ public class EstudianteController {
 	};
 	
 	//http://localhost:8080/API/v1.0/Matricula/estudiantes/actualizar
-	@PutMapping(path = "/actualizar")
-	public void actualizar(@RequestBody Estudiante est) {
-		
-		//Estudiante est= this.estudianteService.buscar(1);
-		//est.setNombre("Israel");
-		//est.setApellido("Reinoso");
+	// Nivel1: http://localhost:8080/API/v1.0/Matricula/estudiantes/3
+	@PutMapping(path = "/{id}")
+	public void actualizar(@RequestBody Estudiante est,  @PathVariable Integer id) {
+		est.setId(id);
 		this.estudianteService.actualizar(est);
 	};
 	
 	
 	//http://localhost:8080/API/v1.0/Matricula/estudiantes/actualizar/parcial
-	@PatchMapping(path = "/actualizar/parcial")
-	public void actualizarParcial(@RequestBody Estudiante est) {
+	// Nivel1: //http://localhost:8080/API/v1.0/Matricula/estudiantes/3
+	@PatchMapping(path = "/{id}")
+	public void actualizarParcial(@RequestBody Estudiante est,  @PathVariable Integer id) {
+		est.setId(id);
 		Estudiante est2= this.estudianteService.buscar(est.getId());
 		
 		if(est.getNombre()!=null) {
@@ -85,7 +86,8 @@ public class EstudianteController {
 	//http://localhost:8080/API/v1.0/Matricula/estudiantes/borrar
 	//http://localhost:8080/API/v1.0/Matricula/estudiantes/borrar/1
 	//http://localhost:8080/API/v1.0/Matricula/estudiantes/borrar/2
-	@DeleteMapping(path = "/borrar/{id}")
+	//Nivel1: http://localhost:8080/API/v1.0/Matricula/estudiantes/3
+	@DeleteMapping(path = "/{id}")
 	public void borrar(@PathVariable Integer id) {
 		
 		this.estudianteService.borrar(id);
@@ -95,7 +97,9 @@ public class EstudianteController {
 	
 	
 	//http://localhost:8080/API/v1.0/Matricula/estudiantes/buscar/1
-	@GetMapping(path = "/buscar/{id}")
+	@GetMapping(path = "/{id}")
+	
+	//Nivel1: http://localhost:8080/API/v1.0/Matricula/estudiantes/1
 	public Estudiante buscar(@PathVariable Integer id) {
 		
 	return	this.estudianteService.buscar(id);
