@@ -35,6 +35,7 @@ public class EstudianteController {
 	//@RequestBoby: cuando se necesita enviar objetos entrada, se lo pone como argumaneto del metodo 
 	//http://localhost:8080/API/v1.0/Matricula/estudiantes/guardar
 	//Nivel1: http://localhost:8080/API/v1.0/Matricula/estudiantes
+	//recuerda que el post es una de las excepciones en la nomenclatura
 	@PostMapping
 	public void guardar(@RequestBody Estudiante est) {
 		/*
@@ -51,6 +52,7 @@ public class EstudianteController {
 	
 	//http://localhost:8080/API/v1.0/Matricula/estudiantes/actualizar
 	// Nivel1: http://localhost:8080/API/v1.0/Matricula/estudiantes/3
+	///en el postman ya no lleva el id
 	@PutMapping(path = "/{id}")
 	public void actualizar(@RequestBody Estudiante est,  @PathVariable Integer id) {
 		est.setId(id);
@@ -59,7 +61,7 @@ public class EstudianteController {
 	
 	
 	//http://localhost:8080/API/v1.0/Matricula/estudiantes/actualizar/parcial
-	// Nivel1: //http://localhost:8080/API/v1.0/Matricula/estudiantes/3
+	// Nivel1: http://localhost:8080/API/v1.0/Matricula/estudiantes/3
 	@PatchMapping(path = "/{id}")
 	public void actualizarParcial(@RequestBody Estudiante est,  @PathVariable Integer id) {
 		est.setId(id);
@@ -97,10 +99,10 @@ public class EstudianteController {
 	
 	
 	//http://localhost:8080/API/v1.0/Matricula/estudiantes/buscar/1
+	//Nivel1: http://localhost:8080/API/v1.0/Matricula/estudiantes/1
 	@GetMapping(path = "/{id}")
 	
-	//Nivel1: http://localhost:8080/API/v1.0/Matricula/estudiantes/1
-	public Estudiante buscar(@PathVariable Integer id) {
+	public Estudiante buscarPorId(@PathVariable Integer id) {
 		
 	return	this.estudianteService.buscar(id);
 	};
@@ -117,9 +119,11 @@ public class EstudianteController {
 	
 	
 	//http://localhost:8080/API/v1.0/Matricula/estudiantes/buscarPorGenero?genero=M
-	@GetMapping(path = "/buscarPorGenero")
+	//una de las exepciones del modelo de Richardson, no colocar en infinitivo 
+	//Nivel 1: http://localhost:8080/API/v1.0/Matricula/estudiantes/genero?genero=F
+	
+	@GetMapping(path = "/genero")
 	public List<Estudiante> buscarPorGenero(@RequestParam String genero){
-		
 		
 		List<Estudiante> lista= this.estudianteService.buscarPorGenero(genero);
 		return lista;
@@ -138,7 +142,8 @@ public class EstudianteController {
 	
 	//
 	//http://localhost:8080/API/v1.0/Matricula/estudiantes/buscarMixto/1?prueba=holamundo
-	@GetMapping(path = "/buscarMixto/{id}")
+	//Nivel 1: http://localhost:8080/API/v1.0/Matricula/estudiantes/mixto/1?prueba=holamundo
+	@GetMapping(path = "/mixto/{id}")
 	public Estudiante buscarMixto(@PathVariable Integer id ,@RequestParam String prueba){
 		
 		System.out.println("Dato: "+ id);
@@ -146,7 +151,7 @@ public class EstudianteController {
 		return this.estudianteService.buscar(id);
 	}
 	
-	
+	//EL END POINT NO TIENE QUE SE AMBIGUO, EN DARSE ESTE CASO ME DA ERRORES AMBIGUOS MAPPING
 	
 	
 	
