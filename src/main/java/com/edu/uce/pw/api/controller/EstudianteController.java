@@ -3,6 +3,7 @@ package com.edu.uce.pw.api.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,15 +38,11 @@ public class EstudianteController {
 	//Nivel1: http://localhost:8080/API/v1.0/Matricula/estudiantes
 	//recuerda que el post es una de las excepciones en la nomenclatura
 	@PostMapping
-	public void guardar(@RequestBody Estudiante est) {
-		/*
-		Estudiante est= new Estudiante();
-		est.setNombre("Henry");
-		est.setApellido("Coyago");
-		est.setFechaNacimiento(LocalDateTime.of(1999, 7,7,10,45,1));
-		*/
+	public ResponseEntity<Estudiante> guardar(@RequestBody Estudiante est) {
+
 		this.estudianteService.guardar(est);
 		
+		return ResponseEntity.status(201).body(est);
 		
 		
 	};
@@ -54,16 +51,17 @@ public class EstudianteController {
 	// Nivel1: http://localhost:8080/API/v1.0/Matricula/estudiantes/3
 	///en el postman ya no lleva el id
 	@PutMapping(path = "/{id}")
-	public void actualizar(@RequestBody Estudiante est,  @PathVariable Integer id) {
+	public ResponseEntity<Estudiante> actualizar(@RequestBody Estudiante est,  @PathVariable Integer id) {
 		est.setId(id);
 		this.estudianteService.actualizar(est);
+		return ResponseEntity.status(238).body(est);
 	};
 	
 	
 	//http://localhost:8080/API/v1.0/Matricula/estudiantes/actualizar/parcial
 	// Nivel1: http://localhost:8080/API/v1.0/Matricula/estudiantes/3
 	@PatchMapping(path = "/{id}")
-	public void actualizarParcial(@RequestBody Estudiante est,  @PathVariable Integer id) {
+	public  ResponseEntity<Estudiante> actualizarParcial(@RequestBody Estudiante est,  @PathVariable Integer id) {
 		est.setId(id);
 		Estudiante est2= this.estudianteService.buscar(est.getId());
 		
@@ -80,7 +78,8 @@ public class EstudianteController {
 		}
 		
 		
-		this.estudianteService.actualizar(est2);
+		
+		return ResponseEntity.status(239).body(est2);
 	};
 	
 	
@@ -90,9 +89,10 @@ public class EstudianteController {
 	//http://localhost:8080/API/v1.0/Matricula/estudiantes/borrar/2
 	//Nivel1: http://localhost:8080/API/v1.0/Matricula/estudiantes/3
 	@DeleteMapping(path = "/{id}")
-	public void borrar(@PathVariable Integer id) {
+	public ResponseEntity<String> borrar(@PathVariable Integer id) {
 		
 		this.estudianteService.borrar(id);
+		return ResponseEntity.status(240).body("Borrado");
 		
 	};
 	
@@ -122,7 +122,7 @@ public class EstudianteController {
 	//una de las exepciones del modelo de Richardson, no colocar en infinitivo 
 	//Nivel 1: http://localhost:8080/API/v1.0/Matricula/estudiantes/genero?genero=F
 	
-	@GetMapping(path = "/genero")
+	@GetMapping(path  = "/genero")
 	public List<Estudiante> buscarPorGenero(@RequestParam String genero){
 		
 		List<Estudiante> lista= this.estudianteService.buscarPorGenero(genero);

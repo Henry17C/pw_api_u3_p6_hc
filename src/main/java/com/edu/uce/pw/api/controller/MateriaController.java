@@ -18,59 +18,63 @@ import com.edu.uce.pw.api.service.IMateriaService;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
-@RequestMapping(path =  "/materias")
+@RequestMapping(path = "/materias")
 @RestController
 public class MateriaController {
-	
-	@Autowired
-	private IMateriaService materiaService;
-	
-	@PostMapping(path ="/guardar")
-	public  void guardar (@RequestBody Materia materia) {
-		materiaService.guardar(materia);
-	};
-	
-	
-	@PutMapping(path = "/actualizar")
-	public void actualizar(@RequestBody Materia materia) {
-		
-		materiaService.actualizar(materia);
-		
-	};
-	
-	
-	@PatchMapping(path = "/actualizar/parcial")
-	public void actualizarParcial(@RequestBody Materia materia) {
-		Materia mater= this.materiaService.buscar(materia.getId());
-		
-		if(mater.getNombre()==null) {
-			mater.setNombre(materia.getNombre());
-		}else if(mater.getCodigo()==null) {
-			mater.setNumeroCreditos(materia.getNumeroCreditos());
-		}
-		
-		materiaService.actualizar(mater);
-	}
-	
-	@DeleteMapping(path = "/borrar/{id}")
-	public void borrar(@PathVariable Integer id) {
-		materiaService.borrar(id);
-		
-	};
-	
-	@GetMapping(path =  "/buscar/{id}")
-	public Materia buscar(@PathVariable Integer id) {
-		
-		return materiaService.buscar(id);
-	};
-	
-	
-	@GetMapping(path = "/buscar/creditos" )
-	public List<Materia> burcarPorCreditos(@RequestParam String creditos) {
-		
-		
-		return materiaService.buscarPorCreditos(creditos);
-	}
-	
-
+    
+    @Autowired
+    private IMateriaService materiaService;
+    
+    @PostMapping
+    public void guardar(@RequestBody Materia materia) {
+        materiaService.guardar(materia);
+    }
+    
+    @PutMapping(path = "/{id}")
+    public void actualizar(@PathVariable Integer id, @RequestBody Materia materia) {
+        Materia mater = materiaService.buscar(id);
+        if (mater != null) {
+            materia.setId(id);
+            materiaService.actualizar(materia);
+        }
+    }
+    
+    
+    @PatchMapping(path = "/{id}")
+    public void actualizarParcial(@PathVariable Integer id, @RequestBody Materia materia) {
+        Materia mater = materiaService.buscar(id);
+        
+        if (mater != null) {
+            if (materia.getNombre() != null) {
+                mater.setNombre(materia.getNombre());
+            }
+            
+            if (materia.getNumeroCreditos() != null) {
+                mater.setNumeroCreditos(materia.getNumeroCreditos());
+            }            
+            materiaService.actualizar(mater);
+        }
+    }
+    
+    @DeleteMapping(path = "/{id}")
+    public void borrar(@PathVariable Integer id) {
+        materiaService.borrar(id);
+    }
+    
+    @GetMapping(path = "/{id}")
+    public Materia buscar(@PathVariable Integer id) {
+        return materiaService.buscar(id);
+    }
+    
+    @GetMapping(path = "/buscarPorCreditos")
+    public List<Materia> buscarPorCreditos(@RequestParam(name = "creditos") String creditos) {
+     
+        if (creditos != null && !creditos.isEmpty()) {
+            return materiaService.buscarPorCreditos(creditos);
+        } else {          
+            return null;
+        }
+    }
+    
+    
 }
