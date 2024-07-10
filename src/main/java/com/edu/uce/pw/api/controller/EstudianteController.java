@@ -102,9 +102,10 @@ public class EstudianteController {
 	//Nivel1: http://localhost:8080/API/v1.0/Matricula/estudiantes/1
 	@GetMapping(path = "/{id}")
 	
-	public Estudiante buscarPorId(@PathVariable Integer id) {
+	public  ResponseEntity<Estudiante>  buscarPorId(@PathVariable Integer id) {
 		
-	return	this.estudianteService.buscar(id);
+	Estudiante es= this.estudianteService.buscar(id);
+	return ResponseEntity.status(236).body(es);
 	};
 	
 	
