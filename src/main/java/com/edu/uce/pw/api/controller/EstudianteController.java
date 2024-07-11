@@ -3,6 +3,7 @@ package com.edu.uce.pw.api.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -104,8 +105,12 @@ public class EstudianteController {
 	
 	public  ResponseEntity<Estudiante>  buscarPorId(@PathVariable Integer id) {
 		
-	Estudiante es= this.estudianteService.buscar(id);
-	return ResponseEntity.status(236).body(es);
+	//Estudiante es= this.estudianteService.buscar(id);
+	//return ResponseEntity.status(236).body(es);
+	HttpHeaders cabeceras = new HttpHeaders();
+	cabeceras.add("mensaje_236", "Corresponde a la consulta de un recurso");
+	cabeceras.add("valor", "Estudiante escontrado");
+	return new ResponseEntity<>(this.estudianteService.buscar(id),cabeceras,236 );
 	};
 	
 	
