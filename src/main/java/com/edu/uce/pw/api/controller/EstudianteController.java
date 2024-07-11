@@ -41,9 +41,13 @@ public class EstudianteController {
 	@PostMapping
 	public ResponseEntity<Estudiante> guardar(@RequestBody Estudiante est) {
 
+		HttpHeaders cabeceras = new HttpHeaders();
+		cabeceras.add("mensaje_201", "Estudiante guardado");
 		this.estudianteService.guardar(est);
 		
-		return ResponseEntity.status(201).body(est);
+		//return ResponseEntity.status(201).body(est);
+		return new ResponseEntity<>(est, cabeceras, 201);
+		
 		
 		
 	};
@@ -53,9 +57,15 @@ public class EstudianteController {
 	///en el postman ya no lleva el id
 	@PutMapping(path = "/{id}")
 	public ResponseEntity<Estudiante> actualizar(@RequestBody Estudiante est,  @PathVariable Integer id) {
+		HttpHeaders cabeceras = new HttpHeaders();
+		cabeceras.add("mesaje_238", "El estudiante fue actualizado");
 		est.setId(id);
 		this.estudianteService.actualizar(est);
-		return ResponseEntity.status(238).body(est);
+		//return ResponseEntity.status(238).body(est);
+		return new ResponseEntity<>(est, cabeceras,238);
+		
+		
+		
 	};
 	
 	
@@ -65,6 +75,8 @@ public class EstudianteController {
 	public  ResponseEntity<Estudiante> actualizarParcial(@RequestBody Estudiante est,  @PathVariable Integer id) {
 		est.setId(id);
 		Estudiante est2= this.estudianteService.buscar(est.getId());
+		HttpHeaders cabeceras= new HttpHeaders();
+		cabeceras.add("mesaje_239", "Estudiante actualizado parcialmente");
 		
 		if(est.getNombre()!=null) {
 			est2.setNombre(est.getNombre());
@@ -78,9 +90,11 @@ public class EstudianteController {
 			est2.setFechaNacimiento(est.getFechaNacimiento());
 		}
 		
+		this.estudianteService.actualizar(est2);
 		
 		
-		return ResponseEntity.status(239).body(est2);
+		//return ResponseEntity.status(239).body(est2);
+		return new ResponseEntity<>(est2,cabeceras,239);
 	};
 	
 	
@@ -91,9 +105,11 @@ public class EstudianteController {
 	//Nivel1: http://localhost:8080/API/v1.0/Matricula/estudiantes/3
 	@DeleteMapping(path = "/{id}")
 	public ResponseEntity<String> borrar(@PathVariable Integer id) {
-		
+		HttpHeaders cabeceras= new HttpHeaders();
+		cabeceras.add("mensaje_240", "La materia fue borrada");
 		this.estudianteService.borrar(id);
-		return ResponseEntity.status(240).body("Borrado");
+		//return ResponseEntity.status(240).body("Borrado");
+		return new ResponseEntity<>("Estudiante borrado",cabeceras,236 );
 		
 	};
 	
