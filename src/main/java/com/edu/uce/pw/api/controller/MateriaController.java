@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,7 +32,7 @@ public class MateriaController {
 	private IMateriaService materiaService;
 	
 	
-	  @PostMapping
+	  @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE , consumes = MediaType.APPLICATION_JSON_VALUE)
 	    public ResponseEntity<Materia> guardar(@RequestBody Materia materia) {
 		  	HttpHeaders headers= new HttpHeaders();
 		  	headers.add("mensaje_200", "Materia insertada");
@@ -41,7 +42,7 @@ public class MateriaController {
 	        return new ResponseEntity<Materia>(materia, headers,200);
 	    }
 	    
-	    @PutMapping(path = "/{id}")
+	    @PutMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE , consumes = MediaType.APPLICATION_JSON_VALUE)
 	    public ResponseEntity<Materia> actualizar(@PathVariable Integer id, @RequestBody Materia materia) {
 	    	HttpHeaders headers= new HttpHeaders();
 	    	headers.add("mensaje_238","Materia actualizada");
@@ -56,7 +57,7 @@ public class MateriaController {
 	    }
 	    
 	    
-	    @PatchMapping(path = "/{id}")
+	    @PatchMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE , consumes = MediaType.APPLICATION_JSON_VALUE)
 	    public ResponseEntity<Materia> actualizarParcial(@PathVariable Integer id, @RequestBody Materia materia) {
 	        Materia mater = materiaService.buscar(id);
 	        HttpHeaders headers= new HttpHeaders();
@@ -77,7 +78,7 @@ public class MateriaController {
 	        return new ResponseEntity<Materia> (materia, headers, 239);
 	    }
 	    
-	    @DeleteMapping(path = "/{id}")
+	    @DeleteMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	    public ResponseEntity<String> borrar(@PathVariable Integer id) {
 	        materiaService.borrar(id);
 	        HttpHeaders headers= new  HttpHeaders();
@@ -87,7 +88,7 @@ public class MateriaController {
 	        return new ResponseEntity<String>("Borrado", headers,240);
 	    }
 	    
-	    @GetMapping(path = "/{id}")
+	    @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	    public ResponseEntity<Materia> buscar(@PathVariable Integer id) {
 	    	Materia m= materiaService.buscar(id);
 	    	
@@ -98,7 +99,7 @@ public class MateriaController {
 	    }
 
 	//http://localhost:8080/API/v1.0/Matricula/materias?creditos=4
-	@GetMapping()
+	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Materia>> getMateriasCreditos(@RequestParam String creditos) {
 		List<Materia> li= materiaService.buscarPorCreditos(creditos);
 		return ResponseEntity.status(200).body(li);
