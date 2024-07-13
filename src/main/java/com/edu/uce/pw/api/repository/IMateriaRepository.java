@@ -16,6 +16,8 @@ public interface IMateriaRepository {
 	
 	public List<Materia> seleccionarPorCreditos(String creditos);
 	
+	public  List<Materia> seleccionarIdEstudiante(Integer id);
+	
 	
 
 }

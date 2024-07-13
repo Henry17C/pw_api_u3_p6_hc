@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.edu.uce.pw.api.repository.modelo.Estudiante;
 import com.edu.uce.pw.api.service.IEstudianteService;
+import com.edu.uce.pw.api.service.IMateriaService;
+import com.edu.uce.pw.api.service.to.EstudianteTO;
+import com.edu.uce.pw.api.service.to.MateriaTO;
 
 import jakarta.annotation.security.PermitAll;
 import jakarta.persistence.TypedQuery;
@@ -34,6 +37,9 @@ public class EstudianteController {
 	//INTERACCION DIRECTA CON EL SERVICE
 	@Autowired
 	private IEstudianteService estudianteService;
+	
+	@Autowired
+	private IMateriaService iMateriaService;
 	
 	
 	//@RequestBoby: cuando se necesita enviar objetos entrada, se lo pone como argumaneto del metodo 
@@ -184,6 +190,16 @@ public class EstudianteController {
 		String prueba = "Texto de prueba";
 		return prueba;
 		
+	}
+	
+	
+	
+	@GetMapping(path = "/hateoas/{id}")
+	public EstudianteTO buscarHateoas(@PathVariable Integer id){
+		EstudianteTO  estu= this.estudianteService.buscarPorId(id);
+		List<MateriaTO> lista = this.iMateriaService.buscarPorIdEstudiante(id);
+		estu.setMaterias(lista);
+		return  estu;
 	}
 	
 
