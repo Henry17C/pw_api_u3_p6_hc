@@ -4,9 +4,11 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.springframework.hateoas.RepresentationModel;
 
 
-public class EstudianteTO implements Serializable{
+
+public class EstudianteTO extends RepresentationModel<EstudianteTO> implements Serializable{
 
 	
 	private static final long serialVersionUID = -8377190250513588379L;

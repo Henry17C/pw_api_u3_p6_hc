@@ -1,5 +1,7 @@
 package com.edu.uce.pw.api.repository.modelo;
 
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,6 +14,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "Materia")
+@JsonIncludeProperties(value="estudiante")
 public class Materia {
 	
 	@Id

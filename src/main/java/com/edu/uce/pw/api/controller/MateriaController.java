@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.edu.uce.pw.api.repository.modelo.Materia;
 import com.edu.uce.pw.api.service.IMateriaService;
+import com.edu.uce.pw.api.service.to.MateriaTO;
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 
 import jakarta.persistence.Cache;
 
@@ -26,10 +28,35 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping(path = "/materias")
+
 public class MateriaController {
 	
 	@Autowired
 	private IMateriaService materiaService;
+	
+	
+	
+	
+	
+	
+	
+	
+	/*
+	
+	  EJEMPLO ERRONEO
+	//http://localhost:8080/API/v1.0/Matricula/materias/3/materias GET   ///ESTE LINK NO CUMPLE EL NIVE 1 DEL MADUREZ DE RICHARDSON
+	 * 
+	 * 
+	@GetMapping(path = "/{id}/materias", produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<MateriaTO>  buscarMateriaPorIdEstudiante(@PathVariable Integer id){
+		return this.materiaService.buscarPorIdEstudiante(id);
+	}
+	
+	
+	
+	*/
+	
+	
 	
 	
 	  @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE , consumes = MediaType.APPLICATION_JSON_VALUE)
