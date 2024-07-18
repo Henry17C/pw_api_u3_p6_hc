@@ -1,5 +1,6 @@
 package com.edu.uce.pw.api.controller;
 
+import java.util.Iterator;
 import java.util.List;
 
 //IMPORT STATICS
@@ -210,9 +211,9 @@ public class EstudianteController {
 		/*List<MateriaTO> lista = this.iMateriaService.buscarPorIdEstudiante(id);
 		estu.setMaterias(lista);*/
 		Link link =  linkTo(methodOn(EstudianteController.class).buscarMateriaPorIdEstudiante(id)).withRel("susMaterias");
-		//Link link2 =  linkTo(methodOn(EstudianteController.class).buscarMateriaPorIdEstudiante(id)).withSelfRel();
+		Link link2 =  linkTo(methodOn(EstudianteController.class).buscarMateriaPorIdEstudiante(id)).withSelfRel();
 				estu.add(link);// le agrego ese hipervinculo, esas funcionalidades las obtuve gracias el extends de TO(transferobject)
-				//estu.add(link2);
+				estu.add(link2);
 				
 				
 				//SI tenngo una capacidad que me retorne estudiantes entonces tendria que hacer un for y a cada uno de ello les iria agregando en link
@@ -227,6 +228,22 @@ public class EstudianteController {
 	public List<MateriaTO>  buscarMateriaPorIdEstudiante(@PathVariable Integer id){
 		return this.iMateriaService.buscarPorIdEstudiante(id);
 	}
+	
+
+
+	//http://localhost:8080/API/v1.0/Matricula/estudiantes/todos GET
+	@GetMapping(path = "/todos", produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<EstudianteTO> buscarTodosHateoas(){
+		
+		List<EstudianteTO> estudianteTOs = this.estudianteService.seleccionarTodosEstudiantesTO();
+		
+		for (EstudianteTO estudianteTO : estudianteTOs) {
+			Link link =  linkTo(methodOn(EstudianteController.class).buscarMateriaPorIdEstudiante(estudianteTO.getId())).withRel("susMaterias");
+			estudianteTO.add(link);
+		}
+		return estudianteTOs;
+	}
+	
 	
 
 }

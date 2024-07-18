@@ -1,5 +1,7 @@
 package com.edu.uce.pw.api.service;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,5 +64,17 @@ public class EstudianteServiceImpl implements IEstudianteService {
 	public EstudianteTO buscarPorId(Integer id) {
 		// TODO Auto-generated method stub
 		return  this.convertir(this.buscar(id));
+	}
+
+	@Override
+	public List<EstudianteTO> seleccionarTodosEstudiantesTO() {
+		// TODO Auto-generated method stub
+		List<Estudiante> estudiantes= this.estudianteRepository.seleccionarTodosEstudiantes();
+		List<EstudianteTO> estudianteTOs= new ArrayList<>();
+		for(Estudiante estudiante : estudiantes ) {
+			EstudianteTO estudianteTO= this.convertir(estudiante);
+			estudianteTOs.add(estudianteTO);
+		}
+		return estudianteTOs;
 	}
 }

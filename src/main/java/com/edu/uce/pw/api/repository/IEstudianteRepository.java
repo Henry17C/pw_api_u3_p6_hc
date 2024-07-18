@@ -18,6 +18,6 @@ public interface IEstudianteRepository {
 	  void insertar(Estudiante estudiante);
 	 
 	  List<Estudiante> seleccionarPorGenero(String genero);
-	 
+	 List<Estudiante> seleccionarTodosEstudiantes();
 	 
 }

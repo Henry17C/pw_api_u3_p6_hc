@@ -19,5 +19,7 @@ public interface IEstudianteService {
 	 
 	 public EstudianteTO buscarPorId(Integer id);
 	 
+	 List<EstudianteTO> seleccionarTodosEstudiantesTO();
+	 
 
 }

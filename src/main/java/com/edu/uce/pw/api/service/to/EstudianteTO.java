@@ -23,10 +23,10 @@ public class EstudianteTO extends RepresentationModel<EstudianteTO> implements S
 	
 	private String genero;
 	
-	private List<MateriaTO> materias;
+	//private List<MateriaTO> materias;
 
 	
-
+/*
 	public List<MateriaTO> getMaterias() {
 		return materias;
 	}
@@ -34,7 +34,7 @@ public class EstudianteTO extends RepresentationModel<EstudianteTO> implements S
 	public void setMaterias(List<MateriaTO> materias) {
 		this.materias = materias;
 	}
-
+*/
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
