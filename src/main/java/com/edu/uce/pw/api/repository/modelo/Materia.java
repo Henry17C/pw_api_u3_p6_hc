@@ -2,6 +2,7 @@ package com.edu.uce.pw.api.repository.modelo;
 
 import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

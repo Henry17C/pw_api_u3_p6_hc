@@ -7,9 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.edu.uce.pw.api.repository.modelo.Estudiante;
+import com.edu.uce.pw.api.repository.modelo.Materia;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 
@@ -63,6 +67,38 @@ public class EstudianteRepositoryImpl implements IEstudianteRepository {
 		TypedQuery<Estudiante> query= this.entityManager.createQuery("Select  e from Estudiante e ", Estudiante.class);
 		
 		return query.getResultList();
+	}
+
+	@Override
+	public Estudiante seleccionarPorCedula(String cedula) {
+		// TODO Auto-generated method stub
+		TypedQuery<Estudiante> query= this.entityManager.createQuery("Select e from Estudiante e Where e.cedula= :cedula", Estudiante.class);
+		query.setParameter("cedula", cedula);
+		
+		return query.getSingleResult();
+		
+		
+	}
+	public void eliminarPorCedula(String cedula) {
+	    // Encontrar el estudiante por cédula
+	    TypedQuery<Estudiante> estudianteQuery = entityManager.createQuery("SELECT e FROM Estudiante e WHERE e.cedula = :cedula", Estudiante.class);
+	    estudianteQuery.setParameter("cedula", cedula);
+	    
+	    Estudiante estudiante;
+	    try {
+	        estudiante = estudianteQuery.getSingleResult();
+	    } catch (NoResultException e) {
+	        // Si no se encuentra ningún estudiante con la cédula proporcionada
+	        throw new EntityNotFoundException("No se encontró el estudiante con la cédula: " + cedula);
+	    }
+
+	    // Eliminar las materias relacionadas primero (asumiendo que la entidad Materia tiene un campo 'estudiante' que es una relación many-to-one)
+	    Query deleteMateriasQuery = entityManager.createQuery("DELETE FROM Materia m WHERE m.estudiante.id = :estudianteId");
+	    deleteMateriasQuery.setParameter("estudianteId", estudiante.getId());
+	    deleteMateriasQuery.executeUpdate();
+
+	    // Eliminar el estudiante
+	    entityManager.remove(estudiante);
 	}
 
 }

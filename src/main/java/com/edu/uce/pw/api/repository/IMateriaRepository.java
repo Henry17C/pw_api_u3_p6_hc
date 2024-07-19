@@ -19,5 +19,6 @@ public interface IMateriaRepository {
 	public  List<Materia> seleccionarIdEstudiante(Integer id);
 	
 	
+	
 
 }

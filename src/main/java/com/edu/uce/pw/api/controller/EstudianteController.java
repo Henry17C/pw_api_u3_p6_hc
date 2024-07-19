@@ -245,5 +245,40 @@ public class EstudianteController {
 	}
 	
 	
+	@DeleteMapping(path = "/{cedula}/buscarPorCedula", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> borrarPorCedula(@PathVariable String cedula){
+		HttpHeaders cabeceras= new HttpHeaders();
+		cabeceras.add("mensaje_236", "Corresponde a la consulta de un recurso");
+		this.estudianteService.eliminarPorCedula(cedula);
+		return new ResponseEntity<>("Borrar",cabeceras,HttpStatus.OK );
+
+	}
+	
+	
+	
+	//http://localhost:8080/API/v1.0/Matricula/estudiantes/3 GET
+	
+	@GetMapping(path = "/{cedula}/buscarPorCedula", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<EstudianteTO> buscarPorCedula(@PathVariable String cedula){
+		HttpHeaders cabeceras= new HttpHeaders();
+		cabeceras.add("mensaje_236", "Corresponde a la consulta de un recurso");
+		EstudianteTO estudianteTO= this.estudianteService.buscarPorCedula(cedula);
+		return new ResponseEntity<>(estudianteTO,cabeceras,HttpStatus.OK );
+
+	}
+	
+	
+	@PutMapping(path = "/{cedula}/buscarPorCedula", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<EstudianteTO> actualizarPorCedula(@RequestBody EstudianteTO estudianteTO, @PathVariable String cedula){
+		HttpHeaders cabeceras= new HttpHeaders();
+		cabeceras.add("mensaje_236", "actualizarPorCedula");
+		EstudianteTO estudianteTO2= this.estudianteService.buscarPorCedula(cedula);
+		estudianteTO.setId(estudianteTO2.getId());
+		
+		this.estudianteService.actualizarPorCedula(estudianteTO);
+		return new ResponseEntity<>(estudianteTO2,cabeceras,HttpStatus.OK );
+
+	}
+	
 
 }

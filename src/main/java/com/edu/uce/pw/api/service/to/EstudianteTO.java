@@ -20,6 +20,7 @@ public class EstudianteTO extends RepresentationModel<EstudianteTO> implements S
 	private String apellido;
 	
 	private LocalDateTime fechaNacimiento;
+	private String cedula;
 	
 	private String genero;
 	
@@ -34,9 +35,20 @@ public class EstudianteTO extends RepresentationModel<EstudianteTO> implements S
 	public void setMaterias(List<MateriaTO> materias) {
 		this.materias = materias;
 	}
+	
 */
+	
+	
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public String getCedula() {
+		return cedula;
+	}
+
+	public void setCedula(String cedula) {
+		this.cedula = cedula;
 	}
 
 	public Integer getId() {

@@ -5,8 +5,10 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -37,15 +39,26 @@ public class Estudiante {
 	@Column(name="est_genero")
 	private String genero;
 	
-	@OneToMany(mappedBy = "estudiante")
+	@Column(name = "est_cedula")
+	private String cedula;
+	
+	@OneToMany(mappedBy = "estudiante", cascade = CascadeType.ALL)
 	private List<Materia> materias;
 	
 	
 	//Get Y SET
 	
 	
+	
+	
 	public List<Materia> getMaterias() {
 		return materias;
+	}
+	public String getCedula() {
+		return cedula;
+	}
+	public void setCedula(String cedula) {
+		this.cedula = cedula;
 	}
 	public void setMaterias(List<Materia> materias) {
 		this.materias = materias;

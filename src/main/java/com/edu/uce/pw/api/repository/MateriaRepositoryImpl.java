@@ -55,4 +55,5 @@ public class MateriaRepositoryImpl implements IMateriaRepository{
 		return query.getResultList();
 	}
 
+	
 }

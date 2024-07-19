@@ -59,11 +59,24 @@ public class EstudianteServiceImpl implements IEstudianteService {
 		
 		return estTo;
 	}
+	private Estudiante trasformarAEstudianteNormal(EstudianteTO estudianteTO) {
+		
+		Estudiante e = new Estudiante();
+		e.setApellido(estudianteTO.getApellido());
+		e.setCedula(estudianteTO.getCedula());
+		e.setFechaNacimiento(e.getFechaNacimiento());
+		e.setGenero(estudianteTO.getGenero());
+		e.setId(estudianteTO.getId());
+		e.setNombre(estudianteTO.getNombre());
+		
+		return e;
+		
+	}
 
 	@Override
 	public EstudianteTO buscarPorId(Integer id) {
 		// TODO Auto-generated method stub
-		return  this.convertir(this.buscar(id));
+		return  this.convertir(this.estudianteRepository.seleccionar(id));
 	}
 
 	@Override
@@ -77,4 +90,35 @@ public class EstudianteServiceImpl implements IEstudianteService {
 		}
 		return estudianteTOs;
 	}
+
+	@Override
+	public EstudianteTO buscarPorCedula(String cedula) {
+		// TODO Auto-generated method stub
+		return  this.convertir( this.estudianteRepository.seleccionarPorCedula(cedula));
+	}
+
+	@Override
+	public void actualizarPorCedula(EstudianteTO estudianteTO) {
+		// TODO Auto-generated method stub
+		
+		Estudiante estudiante= this.trasformarAEstudianteNormal(estudianteTO);
+	this.estudianteRepository.actualizar(estudiante);
+		
+	}
+
+	@Override
+	public void eliminarPorCedula(String cedula) {
+		// TODO Auto-generated method stub
+		try {
+			
+			this.estudianteRepository.eliminarPorCedula(cedula);
+		} catch (Exception e) {
+			// TODO: handle exception
+			
+			System.err.println("Error en la eliminarcion"+e);
+		}
+		
+		
+	}
+
 }
