@@ -26,6 +26,7 @@ import com.edu.uce.pw.api.service.to.MateriaTO;
 import jakarta.annotation.security.PermitAll;
 import jakarta.persistence.TypedQuery;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -35,9 +36,15 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 
-@RestController
 
-@RequestMapping(path= "/estudiantes")
+//si se llama desde diferentes puertos tiene un bloqueo, recordemos que en mi caso esta el back esta levantado en el puerto 8080 y front en el 8081
+//CORS,CrossOrigin, permits origin, bloqued origin, esta relacionado con este problema ya que los componententes no tienen la misma ip y el mismo puerto
+//Esto se soluciona con el crossOrigin 
+
+@RestController
+//@CrossOrigin(value = "http://localhost:8081")
+@CrossOrigin()
+@RequestMapping(path= "/estudiantes")//plural
 public class EstudianteController {
 	
 	
@@ -245,7 +252,7 @@ public class EstudianteController {
 	}
 	
 	
-	@DeleteMapping(path = "/{cedula}/buscarPorCedula", produces = MediaType.APPLICATION_JSON_VALUE)
+	@DeleteMapping(path = "/cedula/{cedula}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> borrarPorCedula(@PathVariable String cedula){
 		HttpHeaders cabeceras= new HttpHeaders();
 		cabeceras.add("mensaje_236", "Corresponde a la consulta de un recurso");
@@ -258,7 +265,7 @@ public class EstudianteController {
 	
 	//http://localhost:8080/API/v1.0/Matricula/estudiantes/3 GET
 	
-	@GetMapping(path = "/{cedula}/buscarPorCedula", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(path = "/cedula/{cedula}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<EstudianteTO> buscarPorCedula(@PathVariable String cedula){
 		HttpHeaders cabeceras= new HttpHeaders();
 		cabeceras.add("mensaje_236", "Corresponde a la consulta de un recurso");
@@ -268,13 +275,13 @@ public class EstudianteController {
 	}
 	
 	
-	@PutMapping(path = "/{cedula}/buscarPorCedula", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PutMapping(path = "/cedula/{cedula}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<EstudianteTO> actualizarPorCedula(@RequestBody EstudianteTO estudianteTO, @PathVariable String cedula){
 		HttpHeaders cabeceras= new HttpHeaders();
 		cabeceras.add("mensaje_236", "actualizarPorCedula");
 		EstudianteTO estudianteTO2= this.estudianteService.buscarPorCedula(cedula);
 		estudianteTO.setId(estudianteTO2.getId());
-		
+		System.out.println("Ingresa al PUT");
 		this.estudianteService.actualizarPorCedula(estudianteTO);
 		return new ResponseEntity<>(estudianteTO2,cabeceras,HttpStatus.OK );
 
