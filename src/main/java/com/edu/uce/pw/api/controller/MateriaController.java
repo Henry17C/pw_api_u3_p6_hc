@@ -18,10 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.edu.uce.pw.api.repository.modelo.Materia;
 import com.edu.uce.pw.api.service.IMateriaService;
-import com.edu.uce.pw.api.service.to.MateriaTO;
-import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 
-import jakarta.persistence.Cache;
 
 import org.springframework.web.bind.annotation.RequestBody;
 

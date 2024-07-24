@@ -1,5 +1,7 @@
 package com.edu.uce.pw.api.controller;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Iterator;
 import java.util.List;
 
@@ -60,14 +62,17 @@ public class EstudianteController {
 	//http://localhost:8080/API/v1.0/Matricula/estudiantes/guardar
 	//Nivel1: http://localhost:8080/API/v1.0/Matricula/estudiantes
 	//recuerda que el post es una de las excepciones en la nomenclatura
-	@PostMapping(produces = "application/json", consumes = "application/xml")
-	public ResponseEntity<Estudiante> guardar(@RequestBody Estudiante est) {
+	@PostMapping(produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<EstudianteTO> guardar(@RequestBody EstudianteTO est) {
+
+		 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+		// LocalDateTime birthdate = LocalDateTime.parse(est.getFechaNacimiento(), formatter);
 
 		HttpHeaders cabeceras = new HttpHeaders();
 		
 		
 		cabeceras.add("mensaje_201", "Estudiante guardado");
-		this.estudianteService.guardar(est);
+		this.estudianteService.guardarEstudiante(est);
 		
 		return new ResponseEntity<>(est, cabeceras, HttpStatus.OK);
 		
@@ -281,6 +286,9 @@ public class EstudianteController {
 		cabeceras.add("mensaje_236", "actualizarPorCedula");
 		EstudianteTO estudianteTO2= this.estudianteService.buscarPorCedula(cedula);
 		estudianteTO.setId(estudianteTO2.getId());
+		
+		System.out.println(estudianteTO);
+		
 		System.out.println("Ingresa al PUT");
 		this.estudianteService.actualizarPorCedula(estudianteTO);
 		return new ResponseEntity<>(estudianteTO2,cabeceras,HttpStatus.OK );

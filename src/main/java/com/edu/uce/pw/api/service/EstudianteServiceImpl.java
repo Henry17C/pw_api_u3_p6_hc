@@ -54,7 +54,9 @@ public class EstudianteServiceImpl implements IEstudianteService {
 		estTo.setApellido(estu.getApellido());
 		estTo.setGenero(estu.getGenero());
 		estTo.setId(estu.getId());
+		estTo.setFechaNacimiento(estTo.getFechaNacimiento());
 		estTo.setNombre(estu.getNombre());
+		estTo.setCedula(estu.getCedula());
 		
 		
 		return estTo;
@@ -121,4 +123,13 @@ public class EstudianteServiceImpl implements IEstudianteService {
 		
 	}
 
+	
+	public void guardarEstudiante(EstudianteTO estudinateTO) {
+		Estudiante estudiante= this.trasformarAEstudianteNormal(estudinateTO);
+		this.estudianteRepository.insertar(estudiante);
+		
+	}
+	
+	
+	
 }

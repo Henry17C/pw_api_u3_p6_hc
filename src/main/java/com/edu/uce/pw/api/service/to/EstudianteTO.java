@@ -43,6 +43,12 @@ public class EstudianteTO extends RepresentationModel<EstudianteTO> implements S
 		return serialVersionUID;
 	}
 
+	@Override
+	public String toString() {
+		return "EstudianteTO [id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", fechaNacimiento="
+				+ fechaNacimiento + ", cedula=" + cedula + ", genero=" + genero + "]";
+	}
+
 	public String getCedula() {
 		return cedula;
 	}
